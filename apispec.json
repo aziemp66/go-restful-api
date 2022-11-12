@@ -13,9 +13,11 @@
   "paths": {
     "/categories" : {
       "get": {
+        "tags": ["categories"],
+        "summary": "List All Categories",
         "responses": {
             "200": {
-                "description": "OK",
+                "description": "Success Retrieving Categories",
                 "content": {
                     "application/json": {
                         "schema": {
@@ -38,17 +40,7 @@
                             "data" : {
                               "type": "array",
                               "items": {
-                                "type": "object",
-                                "properties": {
-                                  "id": {
-                                    "type": "number",
-                                    "example": 1
-                                  },
-                                  "name": {
-                                    "type": "string",
-                                    "example": "Category 1"
-                                  }
-                                }
+                                "$ref": "#/components/schemas/Category"
                               }
                             }
                           }
@@ -56,6 +48,72 @@
                     }
                 }
             }
+        }
+      },
+      "post": {
+        "tags": ["categories"],
+        "summary": "Create a New Category",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Category 1"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success Create Category",
+            "content": {
+              "application/json" : {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code" : {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "status" : {
+                      "type": "string",
+                      "example": "OK",
+                      "enum": [
+                        "OK",
+                        "ERROR",
+                        "NOT_FOUND",
+                        "UNAUTHORIZED"
+                      ]
+                    },
+                    "data" : {
+                      "$ref" : "#/components/schemas/Category"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Category": {
+        "type": "object",
+        "required": ["id","name"],
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name" : {
+            "type": "string"
+          }
         }
       }
     }
