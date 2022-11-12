@@ -11,5 +11,53 @@
     }
   ],
   "paths": {
+    "/categories" : {
+      "get": {
+        "responses": {
+            "200": {
+                "description": "OK",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                          "type": "object",
+                          "properties": {
+                            "code" : {
+                              "type": "number",
+                                "example": 200
+                            },
+                            "status" : {
+                              "type": "string",
+                                "example": "OK",
+                              "enum": [
+                                "OK",
+                                "ERROR",
+                                "NOT_FOUND",
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            "data" : {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "number",
+                                    "example": 1
+                                  },
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Category 1"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                    }
+                }
+            }
+        }
+      }
+    }
   }
 }
