@@ -1,157 +1,196 @@
 {
-  "openapi": "3.0.3",
-  "info": {
-    "title": "Golang REST-ful API",
-    "description": "API Spec for Golang REST-ful API",
-    "version": "1.0.0"
-  },
-  "servers": [
-    {
-      "url": "https://localhost:3000/api"
-    }
-  ],
-  "paths": {
-    "/categories" : {
-      "get": {
-        "tags": ["categories"],
-        "summary": "List All Categories",
-        "responses": {
-            "200": {
-                "description": "Success Retrieving Categories",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                          "type": "object",
-                          "properties": {
-                            "code" : {
-                              "type": "number"
-                            },
-                            "status" : {
-                              "type": "string"
-                            },
-                            "res" : {
-                              "type": "array",
-                              "items": {
-                                "$ref": "#/components/schemas/Category"
-                              }
-                            }
-                          }
-                        }
-                    }
-                }
-            }
-        }
-      },
-      "post": {
-        "tags": ["categories"],
-        "summary": "Create a New Category",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "example": "Category 1"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success Create Category",
-            "content": {
-              "application/json" : {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code" : {
-                      "type": "number",
-                      "example": 200
-                    },
-                    "status" : {
-                      "type": "string",
-                      "example": "OK",
-                      "enum": [
-                        "OK",
-                        "ERROR",
-                        "NOT_FOUND",
-                        "UNAUTHORIZED"
-                      ]
-                    },
-                    "data" : {
-                      "$ref" : "#/components/schemas/Category"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/categories/{id}": {
-      "get": {
-        "tags": ["categories"],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/CategoryId"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully Retrieve Category With The Id",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code" : {
-                      "type": "number"
-                    },
-                    "status" : {
-                      "type": "string"
-                    },
-                    "res": {
-                      "$ref": "#/components/schemas/Category"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "Category": {
-        "type": "object",
-        "required": ["id","name"],
-        "properties": {
-          "id": {
-            "type": "number"
-          },
-          "name" : {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "parameters": {
-      "CategoryId": {
-        "in": "path",
-        "name": "id",
-        "description": "Id of Category",
-        "required": true,
-        "schema": {
-          "type": "number"
-        }
-      }
-    }
-  }
+	"openapi": "3.0.3",
+	"info": {
+		"title": "Golang REST-ful API",
+		"description": "API Spec for Golang REST-ful API",
+		"version": "1.0.0"
+	},
+	"servers": [
+		{
+			"url": "https://localhost:3000/api"
+		}
+	],
+	"paths": {
+		"/categories": {
+			"get": {
+				"tags": ["categories"],
+				"summary": "List All Categories",
+				"responses": {
+					"200": {
+						"description": "Success Retrieving Categories",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"code": {
+											"type": "number"
+										},
+										"status": {
+											"type": "string"
+										},
+										"value": {
+											"type": "array",
+											"items": {
+												"$ref": "#/components/schemas/Category"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": ["categories"],
+				"summary": "Create a New Category",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IdlessCategory"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Success Create Category",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"code": {
+											"type": "number",
+											"example": 200
+										},
+										"status": {
+											"type": "string",
+											"example": "OK"
+										},
+										"value": {
+											"$ref": "#/components/schemas/Category"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/categories/{id}": {
+			"get": {
+				"summary": "Get The Category of id",
+				"tags": ["categories"],
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/CategoryId"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successfully Retrieve Category With The Id",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"code": {
+											"type": "number"
+										},
+										"status": {
+											"type": "string"
+										},
+										"value": {
+											"$ref": "#/components/schemas/Category"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"put": {
+				"summary": "Update The Category of the id",
+				"tags": ["categories"],
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/CategoryId"
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IdlessCategory"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Successfully Update The Category",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"code": {
+											"type": "number"
+										},
+										"status": {
+											"type": "number"
+										},
+										"value": {
+											"$ref": "#/components/parameters/CategoryId"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"Category": {
+				"type": "object",
+				"required": ["id", "name"],
+				"properties": {
+					"id": {
+						"type": "number"
+					},
+					"name": {
+						"type": "string"
+					}
+				}
+			},
+			"IdlessCategory": {
+				"type": "object",
+				"required": ["name"],
+				"properties": {
+					"name": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"parameters": {
+			"CategoryId": {
+				"in": "path",
+				"name": "id",
+				"description": "Id of Category",
+				"required": true,
+				"schema": {
+					"type": "number"
+				}
+			}
+		}
+	}
 }
