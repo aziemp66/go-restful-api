@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Golang RESTful API",
-    "description": "API Spec for Golang RESTful API",
+    "title": "Golang REST-ful API",
+    "description": "API Spec for Golang REST-ful API",
     "version": "1.0.0"
   },
   "servers": [
@@ -24,20 +24,12 @@
                           "type": "object",
                           "properties": {
                             "code" : {
-                              "type": "number",
-                                "example": 200
+                              "type": "number"
                             },
                             "status" : {
-                              "type": "string",
-                                "example": "OK",
-                              "enum": [
-                                "OK",
-                                "ERROR",
-                                "NOT_FOUND",
-                                "UNAUTHORIZED"
-                              ]
+                              "type": "string"
                             },
-                            "data" : {
+                            "res" : {
                               "type": "array",
                               "items": {
                                 "$ref": "#/components/schemas/Category"
@@ -100,6 +92,39 @@
           }
         }
       }
+    },
+    "/categories/{id}": {
+      "get": {
+        "tags": ["categories"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/CategoryId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully Retrieve Category With The Id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code" : {
+                      "type": "number"
+                    },
+                    "status" : {
+                      "type": "string"
+                    },
+                    "res": {
+                      "$ref": "#/components/schemas/Category"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -114,6 +139,17 @@
           "name" : {
             "type": "string"
           }
+        }
+      }
+    },
+    "parameters": {
+      "CategoryId": {
+        "in": "path",
+        "name": "id",
+        "description": "Id of Category",
+        "required": true,
+        "schema": {
+          "type": "number"
         }
       }
     }
