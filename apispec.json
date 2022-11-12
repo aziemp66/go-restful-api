@@ -29,7 +29,7 @@
 										"status": {
 											"type": "string"
 										},
-										"value": {
+										"res": {
 											"type": "array",
 											"items": {
 												"$ref": "#/components/schemas/Category"
@@ -70,7 +70,7 @@
 											"type": "string",
 											"example": "OK"
 										},
-										"value": {
+										"res": {
 											"$ref": "#/components/schemas/Category"
 										}
 									}
@@ -104,7 +104,7 @@
 										"status": {
 											"type": "string"
 										},
-										"value": {
+										"res": {
 											"$ref": "#/components/schemas/Category"
 										}
 									}
@@ -146,7 +146,39 @@
 											"type": "number"
 										},
 										"value": {
-											"$ref": "#/components/parameters/CategoryId"
+											"$ref": "#/components/schemas/IdlessCategory"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"summary": "Delete Category with the id",
+				"tags": ["categories"],
+				"parameters": [
+					{
+						"$ref": "#/components/schemas/IdlessCategory"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Delete Id Successful",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"code" : {
+											"type": "number"
+										},
+										"status" : {
+											"type": "string"
+										},
+										"value": {
+											"$ref" : "#/components/schemas/Category"
 										}
 									}
 								}
