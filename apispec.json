@@ -183,11 +183,9 @@
 				],
 				"summary": "Delete Category with the id",
 				"tags": ["categories"],
-				"parameters": [
-					{
-						"$ref": "#/components/schemas/IdlessCategory"
-					}
-				],
+				"parameters": [{
+					"$ref": "#/components/parameters/CategoryId"
+				}],
 				"responses": {
 					"200": {
 						"description": "Delete Category Successful",
