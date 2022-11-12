@@ -13,6 +13,11 @@
 	"paths": {
 		"/categories": {
 			"get": {
+				"security": [
+					{
+						"CategoryAuth": []
+					}
+				],
 				"tags": ["categories"],
 				"summary": "List All Categories",
 				"responses": {
@@ -43,6 +48,11 @@
 				}
 			},
 			"post": {
+				"security": [
+					{
+						"CategoryAuth": []
+					}
+				],
 				"tags": ["categories"],
 				"summary": "Create a New Category",
 				"requestBody": {
@@ -83,6 +93,11 @@
 		},
 		"/categories/{id}": {
 			"get": {
+				"security": [
+					{
+						"CategoryAuth": []
+					}
+				],
 				"summary": "Get The Category of id",
 				"tags": ["categories"],
 				"parameters": [
@@ -115,6 +130,11 @@
 				}
 			},
 			"put": {
+				"security": [
+					{
+						"CategoryAuth": []
+					}
+				],
 				"summary": "Update The Category of the id",
 				"tags": ["categories"],
 				"parameters": [
@@ -156,6 +176,11 @@
 				}
 			},
 			"delete": {
+				"security": [
+					{
+						"CategoryAuth": []
+					}
+				],
 				"summary": "Delete Category with the id",
 				"tags": ["categories"],
 				"parameters": [
@@ -165,20 +190,17 @@
 				],
 				"responses": {
 					"200": {
-						"description": "Delete Id Successful",
+						"description": "Delete Category Successful",
 						"content": {
 							"application/json": {
 								"schema": {
 									"type": "object",
 									"properties": {
-										"code" : {
+										"code": {
 											"type": "number"
 										},
-										"status" : {
+										"status": {
 											"type": "string"
-										},
-										"value": {
-											"$ref" : "#/components/schemas/Category"
 										}
 									}
 								}
@@ -190,6 +212,14 @@
 		}
 	},
 	"components": {
+		"securitySchemes": {
+			"CategoryAuth": {
+				"type": "apiKey",
+				"in": "header",
+				"name": "X-API-Key",
+				"description": "Auth for Category API"
+			}
+		},
 		"schemas": {
 			"Category": {
 				"type": "object",
