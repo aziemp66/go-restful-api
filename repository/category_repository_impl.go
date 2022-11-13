@@ -5,14 +5,14 @@ import (
 	"database/sql"
 	"errors"
 
-	"github.com/aziemp66/go-restful-api/gen/helper"
+	"github.com/aziemp66/go-restful-api/helper"
 	"github.com/aziemp66/go-restful-api/model/domain"
 )
 
 type CategoryRepositoryImpl struct {
 }
 
-func (c CategoryRepositoryImpl) Save(
+func (c *CategoryRepositoryImpl) Save(
 	ctx context.Context,
 	tx *sql.Tx,
 	category domain.Category,
@@ -30,7 +30,7 @@ func (c CategoryRepositoryImpl) Save(
 	return category
 }
 
-func (c CategoryRepositoryImpl) Update(
+func (c *CategoryRepositoryImpl) Update(
 	ctx context.Context,
 	tx *sql.Tx,
 	category domain.Category,
@@ -43,7 +43,7 @@ func (c CategoryRepositoryImpl) Update(
 	return category
 }
 
-func (c CategoryRepositoryImpl) Delete(ctx context.Context, tx *sql.Tx, category domain.Category) {
+func (c *CategoryRepositoryImpl) Delete(ctx context.Context, tx *sql.Tx, category domain.Category) {
 	//TODO implement me
 	SQL := "delete from category where id = ?"
 
@@ -52,7 +52,7 @@ func (c CategoryRepositoryImpl) Delete(ctx context.Context, tx *sql.Tx, category
 	helper.PanicIfError(err)
 }
 
-func (c CategoryRepositoryImpl) FindById(
+func (c *CategoryRepositoryImpl) FindById(
 	ctx context.Context,
 	tx *sql.Tx,
 	categoryId int,
@@ -76,7 +76,7 @@ func (c CategoryRepositoryImpl) FindById(
 	}
 }
 
-func (c CategoryRepositoryImpl) FindAll(ctx context.Context, tx *sql.Tx) []domain.Category {
+func (c *CategoryRepositoryImpl) FindAll(ctx context.Context, tx *sql.Tx) []domain.Category {
 	SQL := "select id, name from category"
 
 	rows, err := tx.QueryContext(ctx, SQL)
