@@ -7,6 +7,7 @@ import (
 	"github.com/aziemp66/go-restful-api/helper"
 	"github.com/aziemp66/go-restful-api/model/domain"
 	"github.com/aziemp66/go-restful-api/model/web"
+	"github.com/go-playground/validator/v10"
 
 	"github.com/aziemp66/go-restful-api/repository"
 )
@@ -14,12 +15,16 @@ import (
 type CategoryServiceImpl struct {
 	CategoryRepository repository.CategoryRepository
 	DB                 *sql.DB
+	Validate           *validator.Validate
 }
 
 func (c CategoryServiceImpl) Create(
 	ctx context.Context,
 	request web.CategoryCreateRequest,
 ) web.CategoryResponse {
+	err := c.Validate.Struct(request)
+	helper.PanicIfError(err)
+
 	tx, err := c.DB.Begin()
 	helper.PanicIfError(err)
 
@@ -38,6 +43,9 @@ func (c CategoryServiceImpl) Update(
 	ctx context.Context,
 	request web.CategoryUpdateRequest,
 ) web.CategoryResponse {
+	err := c.Validate.Struct(request)
+	helper.PanicIfError(err)
+
 	tx, err := c.DB.Begin()
 	helper.PanicIfError(err)
 
