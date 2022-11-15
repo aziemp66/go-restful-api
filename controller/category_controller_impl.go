@@ -15,6 +15,12 @@ type CategoryControllerImpl struct {
 	CategoryService service.CategoryService
 }
 
+func NewCategoryController(categoryService service.CategoryService) CategoryController {
+	return &CategoryControllerImpl{
+		CategoryService: categoryService,
+	}
+}
+
 func (c CategoryControllerImpl) Create(
 	w http.ResponseWriter,
 	r *http.Request,

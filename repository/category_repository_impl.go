@@ -12,6 +12,10 @@ import (
 type CategoryRepositoryImpl struct {
 }
 
+func NewCategoryRepository() CategoryRepository {
+	return &CategoryRepositoryImpl{}
+}
+
 func (c *CategoryRepositoryImpl) Save(
 	ctx context.Context,
 	tx *sql.Tx,
