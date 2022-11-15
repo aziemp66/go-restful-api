@@ -1,6 +1,8 @@
 package main
 
 import (
+	"net/http"
+
 	"github.com/aziemp66/go-restful-api/app"
 	"github.com/aziemp66/go-restful-api/controller"
 	"github.com/aziemp66/go-restful-api/helper"
@@ -31,4 +33,12 @@ func main() {
 	router.POST("/api/categories", categoryController.Create)
 	router.PUT("/api/categories/:id", categoryController.Update)
 	router.DELETE(("/api/categories/:id"), categoryController.Delete)
+
+	server := http.Server{
+		Addr:    ":5000",
+		Handler: router,
+	}
+
+	err := server.ListenAndServe()
+	helper.PanicIfError(err)
 }
