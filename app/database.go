@@ -3,9 +3,10 @@ package app
 import (
 	"database/sql"
 	"fmt"
+	"time"
+
 	"github.com/aziemp66/go-restful-api/helper"
 	_ "github.com/go-sql-driver/mysql"
-	"time"
 )
 
 func NewDB(
@@ -15,17 +16,15 @@ func NewDB(
 	DB_PORT string,
 	DB_NAME string,
 ) *sql.DB {
-	db, err := sql.Open(
-		"mysql",
-		fmt.Sprintf(
-			"%s:%s@tcp(%s:%s)/%s?parseTime=true",
-			DB_USER,
-			DB_PASSWORD,
-			DB_HOST,
-			DB_PORT,
-			DB_NAME,
-		),
+	connectionString := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true",
+		DB_USER,
+		DB_PASSWORD,
+		DB_HOST,
+		DB_PORT,
+		DB_NAME,
 	)
+	fmt.Println(connectionString)
+	db, err := sql.Open("mysql", connectionString)
 	helper.PanicIfError(err)
 
 	db.SetMaxIdleConns(10)
