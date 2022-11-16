@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/aziemp66/go-restful-api/app"
@@ -19,7 +18,6 @@ func main() {
 	dbName := helper.GoDotEnvVariable("DB_NAME")
 	dbHost := helper.GoDotEnvVariable("DB_HOST")
 	dbPort := helper.GoDotEnvVariable("DB_PORT")
-	fmt.Println(dbUser, dbPass, dbName, dbHost, dbPort)
 
 	db := app.NewDB(dbUser, dbPass, dbHost, dbPort, dbName)
 	validate := validator.New()

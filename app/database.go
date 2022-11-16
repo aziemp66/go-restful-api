@@ -23,7 +23,6 @@ func NewDB(
 		DB_PORT,
 		DB_NAME,
 	)
-	fmt.Println(connectionString)
 	db, err := sql.Open("mysql", connectionString)
 	helper.PanicIfError(err)
 
