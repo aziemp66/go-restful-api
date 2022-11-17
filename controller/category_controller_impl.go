@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"encoding/json"
 	"net/http"
 	"strconv"
 
@@ -26,11 +25,8 @@ func (c CategoryControllerImpl) Create(
 	r *http.Request,
 	p httprouter.Params,
 ) {
-	decoder := json.NewDecoder(r.Body)
 	categoryCreateRequest := web.CategoryCreateRequest{}
-
-	err := decoder.Decode(&categoryCreateRequest)
-	helper.PanicIfError(err)
+	helper.ReadFromRequestBody(r, categoryCreateRequest)
 
 	categoryResponse := c.CategoryService.Create(r.Context(), categoryCreateRequest)
 	webResponse := web.WebResponse{
@@ -39,10 +35,7 @@ func (c CategoryControllerImpl) Create(
 		Value:  categoryResponse,
 	}
 
-	w.Header().Add("Content-Type", "application/json")
-	encoder := json.NewEncoder(w)
-	err = encoder.Encode(webResponse)
-	helper.PanicIfError(err)
+	helper.WriteToResponseBody(w, webResponse)
 }
 
 func (c CategoryControllerImpl) Update(
@@ -50,12 +43,8 @@ func (c CategoryControllerImpl) Update(
 	r *http.Request,
 	p httprouter.Params,
 ) {
-	//TODO implement me
-	decoder := json.NewDecoder(r.Body)
 	categoryUpdateRequest := web.CategoryUpdateRequest{}
-
-	err := decoder.Decode(&categoryUpdateRequest)
-	helper.PanicIfError(err)
+	helper.ReadFromRequestBody(r, categoryUpdateRequest)
 
 	categoryId := p.ByName("id")
 	id, err := strconv.Atoi(categoryId)
@@ -70,10 +59,7 @@ func (c CategoryControllerImpl) Update(
 		Value:  categoryResponse,
 	}
 
-	w.Header().Add("Content-Type", "application/json")
-	encoder := json.NewEncoder(w)
-	err = encoder.Encode(webResponse)
-	helper.PanicIfError(err)
+	helper.WriteToResponseBody(w, webResponse)
 }
 
 func (c CategoryControllerImpl) Delete(
@@ -91,10 +77,7 @@ func (c CategoryControllerImpl) Delete(
 		Status: "OK",
 	}
 
-	w.Header().Add("Content-Type", "application/json")
-	encoder := json.NewEncoder(w)
-	err = encoder.Encode(webResponse)
-	helper.PanicIfError(err)
+	helper.WriteToResponseBody(w, webResponse)
 }
 
 func (c CategoryControllerImpl) FindById(
@@ -113,10 +96,7 @@ func (c CategoryControllerImpl) FindById(
 		Value:  categoryResponse,
 	}
 
-	w.Header().Add("Content-Type", "application/json")
-	encoder := json.NewEncoder(w)
-	err = encoder.Encode(webResponse)
-	helper.PanicIfError(err)
+	helper.WriteToResponseBody(w, webResponse)
 }
 
 func (c CategoryControllerImpl) FindAll(
@@ -131,8 +111,5 @@ func (c CategoryControllerImpl) FindAll(
 		Value:  categoryResponse,
 	}
 
-	w.Header().Add("Content-Type", "application/json")
-	encoder := json.NewEncoder(w)
-	err := encoder.Encode(webResponse)
-	helper.PanicIfError(err)
+	helper.WriteToResponseBody(w, webResponse)
 }

@@ -76,7 +76,7 @@ func (c *CategoryRepositoryImpl) FindById(
 
 		return category, nil
 	} else {
-		return category, errors.New("category not gound")
+		return category, errors.New("category not found")
 	}
 }
 
