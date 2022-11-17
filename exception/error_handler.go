@@ -13,6 +13,10 @@ func ErrorHandler(w http.ResponseWriter, r *http.Request, err interface{}) {
 		return
 	}
 
+	if validationError(w, r, err) {
+		return
+	}
+
 	internalServerError(w, r, err)
 }
 
